@@ -1,0 +1,24 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: dtek_shutdowns
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  mcp-server:
+    build: .
+    depends_on:
+      - db
+    environment:
+      MCP_DATABASE_URL: postgresql+asyncpg://postgres:postgres@db:5432/dtek_shutdowns
+      MCP_LOG_LEVEL: INFO
+    stdin_open: true
+
+volumes:
+  pgdata:
