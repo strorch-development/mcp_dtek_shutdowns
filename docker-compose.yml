@@ -1,0 +1,35 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-dtek}
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  scraper:
+    build:
+      context: .
+      dockerfile: services/scraper/Dockerfile
+    environment:
+      DATABASE_URL: ${DATABASE_URL:-postgres://postgres:postgres@db:5432/dtek}
+      DTEK_URL: ${DTEK_URL:-https://www.dtek-krem.com.ua/ua/shutdowns}
+      SLEEP_SECONDS: ${SLEEP_SECONDS:-600}
+      SEED_ADDRESSES: ${SEED_ADDRESSES:-}
+    depends_on:
+      - db
+
+  mcp:
+    build:
+      context: .
+      dockerfile: services/mcp/Dockerfile
+    environment:
+      DATABASE_URL: ${DATABASE_URL:-postgres://postgres:postgres@db:5432/dtek}
+    depends_on:
+      - db
+
+volumes:
+  db-data:

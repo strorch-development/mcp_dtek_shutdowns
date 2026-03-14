@@ -1,0 +1,15 @@
+{
+  "name": "dtek-scraper-worker",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "description": "Scraper worker for dtek-krem.com.ua shutdowns",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node src/index.js"
+  },
+  "dependencies": {
+    "pg": "^8.13.0",
+    "playwright": "^1.51.0"
+  }
+}

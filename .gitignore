@@ -1,4 +1,7 @@
 .env
+.env.*
+
+# Python
 __pycache__/
 *.pyc
 *.egg-info/
@@ -7,3 +10,17 @@ build/
 .mypy_cache/
 .ruff_cache/
 .pytest_cache/
+
+# Node
+node_modules/
+**/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS/editor
+.DS_Store
+.vscode/
+
+# Docker
+**/.docker/
